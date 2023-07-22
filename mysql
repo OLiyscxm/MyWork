@@ -1,0 +1,46 @@
+#1.取得每个部门最高薪水的人员名称	
+select e.ename,e.deptno,e.sal from emp e 
+join (select deptno, max(sal) maxsal from emp group by deptno)t on e.deptno = t.deptno and e.sal = t.maxsal
+#2.薪水在部门平均薪水之上的员工信息
+SELECT e.ename,e.sal,e.deptno from emp e 
+JOIN (select deptno, avg(sal) avgsal from emp group by deptno) t ON e.deptno = t.deptno AND e.sal>t.avgsal
+#3.取得部门中(所有人的)平均的薪水等级   意思是等级求平均值
+select t.deptno,avg(t.grade) from 
+(select e.deptno,s.grade from emp e join salgrade s on e.sal>=s.losal and e.sal<=s.hisal) t group by t.deptno
+#4.不用max，查出最高薪水
+SELECT sal AS maxsal
+FROM emp ORDER BY sal DESC LIMIT 1;
+#5.取得平均薪水最高的部门的部门信息
+select deptno,avg(sal) as avgsal from emp 
+group by deptno 
+order by avgsal desc limit 1;
+#6.求平均薪水等级最低的部门信息
+#7.取得比普通员工(员工代码没有在mgr字段上出现的)的最高薪水还要高的领导人姓名
+select empno,ename,sal from emp where empno in (select distinct  IFNULL(mgr,0) from emp) 
+and sal>(select max(sal) maxsal from emp where empno 
+not in(select distinct  IFNULL(mgr,0) from emp))
+#8.取得薪水最高的五名员工
+select ename,sal from emp order by sal desc limit 5
+#9.取得薪水最高的六到十名员工
+SELECT ename,sal FROM emp ORDER BY sal DESC LIMIT 5,5
+#10.取得最后入职的五名员工
+select ename,hiredate from emp order by hiredate desc limit 5 
+#11.取得每个薪水等级有多少员工
+select s.grade,count(s.grade) from emp e join salgrade s on e.sal between s.losal and s.hisal group by grade
+#12.列出所有员工及其领导人的姓名
+select e.ename as 员工,m.ename as 领导 from emp e join emp m on e.mgr=m.empno 
+#13.列出受雇日期早于其直接上级的所有员工的编号，姓名，部门名称
+select e.empno,e.ename,d.dname from emp e join dept d on e.deptno=d.deptno 
+where e.hiredate<(select hiredate from emp m where e.mgr=m.empno)
+#14.列出部门名称和这些部门的员工信息，同时列出那些没有员工的部门
+SELECT d.dname, e.*FROM dept d LEFT JOIN emp e ON d.deptno = e.deptno
+#15.列出至少有五个员工的所有部门
+select deptno,count(*) as c from emp group by deptno having c>=5
+#16.查出所有薪资高于史密斯的员工信息
+select * from emp where sal>(select sal from emp where ename='smith')
+#17.列出所有的job为clerk的员工信息,部门名称及部门人数
+select e.*,d.dname,c.deptcount from emp e join dept d on e.deptno=d.deptno
+join (select deptno,count(*) as deptcount from emp group by deptno) c on d.deptno=c.deptno where job='clerk'
+#18.列出最低薪金大于1500的各种工作及其从事此工作的全部雇员人数 
+select t1.job,t2.jobcount from (select min(sal) as minsal,job from emp group by job having minsal>1500) t1 
+join (select job,count(*) as jobcount from emp group by job) t2 on t1.job=t2.job
