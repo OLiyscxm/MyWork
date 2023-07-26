@@ -65,3 +65,8 @@ ALTER TABLE lost_and_found CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unic
 INSERT INTO lost_and_found (lost_id, lost_name, lost_position, lost_description, claim_position, lost_date, is_returned) VALUES  
 (1, '钥匙', '二教', 'xxx', 'xxx', '2022-08-01', 1),  
 (2, '手机', '三教', 'xxx', 'xxx', '2022-08-02', 0);  
+
+CREATE TABLE myUser (  
+  username VARCHAR(255) NOT NULL,  
+  password VARCHAR(255) NOT NULL
+);  
