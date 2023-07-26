@@ -48,3 +48,20 @@ Java线程可以通过继承Thread类或实现Runnable接口来创建和启动�
 
 第四课  
 开始几题难度较大，看着不难其实做了很久，但练习几题后逐渐找到感觉，所以还是要多加练习  
+
+第五课  
+难点在于文件配置和网页端与数据库的连接，在改bug的过程中也遇到了很多坑，如下为数据库表
+CREATE TABLE lost_and_found (  
+  lost_id INT PRIMARY KEY,  
+  lost_name VARCHAR(255) NOT NULL,  
+  lost_position VARCHAR(255) NOT NULL,  
+  lost_description TEXT,  
+  claim_position VARCHAR(255),  
+  lost_date DATE,  
+  is_returned INT  
+);  
+ALTER TABLE lost_and_found CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;  
+
+INSERT INTO lost_and_found (lost_id, lost_name, lost_position, lost_description, claim_position, lost_date, is_returned) VALUES  
+(1, '钥匙', '二教', 'xxx', 'xxx', '2022-08-01', 1),  
+(2, '手机', '三教', 'xxx', 'xxx', '2022-08-02', 0);  
