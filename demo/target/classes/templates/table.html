@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>失物招领</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .form-group h3 {
+      margin: 0;
+    }
+    .form-group input[type="text"], .form-group input[type="date"], .form-group input[type="submit"] {
+      width: 100%;
+      padding: 5px;
+      border: 1px solid #ddd;
+    }
+    .form-group input[type="checkbox"] {
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+<h1>失物招领表</h1>
+<table>
+  <tr>
+    <th>失物ID</th>
+    <th>失物名称</th>
+    <th>失物位置</th>
+    <th>失物描述</th>
+    <th>认领位置</th>
+    <th>失物日期</th>
+    <th>是否归还</th>
+    <th>删除操作</th>
+  </tr>
+  <tr th:each="lost:${lostMsg}">
+    <td th:text="${lost.lostId}">1</td>
+    <td th:text="${lost.lostName}">钥匙</td>
+    <td th:text="${lost.lostPosition}">二教</td>
+    <td th:text="${lost.lostDescription}">xxx</td>
+    <td th:text="${lost.claimPosition}">xxx</td>
+    <td th:text="${lost.lostDate}">2022/8/1</td>
+    <td th:text="${lost.isReturned()}">是</td>
+    <td>
+      <a th:href="@{/delete/{lostId}(lostId=${lost.lostId})}" class="" type="button">删除</a>
+    </td>
+  </tr>
+</table>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>失物添加</h2>
+<form action="/add" method="post" th:action="@{/add}">
+  <table>
+    <tr>
+      <th><h4>失物ID:</h4></th>
+      <td><input type="number" name="lostId" required></td>
+      <th><h4>失物名称:</h4></th>
+      <td><input type="text" name="lostName" required></td>
+    </tr>
+    <tr>
+      <th><h4>失物位置:</h4></th>
+      <td><input type="text" name="lostPosition" required></td>
+      <th><h4>失物描述:</h4></th>
+      <td><input type="text" name="lostDescription" required></td>
+    </tr>
+    <tr>
+      <th><h4>认领位置:</h4></th>
+      <td><input type="text" name="claimPosition" required></td>
+      <th><h4>失物日期:</h4></th>
+      <td><input type="date" name="lostDate" required></td>
+    </tr>
+    <tr>
+      <th><h4>是否归还:</h4></th>
+      <td colspan="3" style="display: flex; align-items: center;">
+        <label style="margin-right: 10px;"><input type="radio" name="isReturned" value="true" required> <h4>是</h4></label>
+        <label><input type="radio" name="isReturned" value="false" required> <h4>否</h4></label>
+      </td>
+      <td colspan="2" style="text-align: center;">
+        <input type="submit" value="添加" style="font-size: 20px;">
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

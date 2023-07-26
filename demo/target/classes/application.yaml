@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mysql
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml    #由于使用mapper进行代理开发所以要指定一下mapper的位置
+  config-location: classpath:mybatis/mybatis-config.xml
+

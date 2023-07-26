@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zym.boot.model.demo.mapper.MainMapper">
+    <resultMap id="lostResultMap" type="com.zym.boot.model.demo.pojo.Lost">
+        <result column="lost_id" property="lostId"></result>
+        <result column="lost_name" property="lostName"></result>
+        <result column="lost_position" property="lostPosition"></result>
+        <result column="lost_description" property="lostDescription"></result>
+        <result column="claim_position" property="claimPosition"></result>
+        <result column="lost_date" property="lostDate"></result>
+        <result column="is_returned" property="isReturned"></result>
+
+    </resultMap>
+    <!--这里的namespace即为我们之前创建的mapper接口的全类名-->
+    <select id="selectAll" resultMap="lostResultMap">   <!---这里的id属性即为接口中的方法名-->
+        select * from lost_and_found
+    </select>
+
+    <delete id="delete">delete from lost_and_found where lost_id=#{lostId}</delete>
+
+    <insert id="insert">
+        INSERT INTO lost_and_found
+        VALUES (#{lostId}, #{lostName}, #{lostPosition}, #{lostDescription}, #{claimPosition}, #{lostDate}, #{isReturned})
+    </insert>
+
+    <select id="select" resultType="com.zym.boot.model.demo.pojo.User">
+        select * from myUser where username=#{username} and password=#{password}
+    </select>
+
+    <insert id="signInsert">
+        insert into myUser
+        values (#{username},#{password})
+    </insert>
+</mapper>
