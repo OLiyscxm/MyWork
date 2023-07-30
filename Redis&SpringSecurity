@@ -1,0 +1,17 @@
+1.授权过程    
+角色和权限管理：Spring Security提供了基于角色和权限的授权机制。可以通过配置角色或权限来保护特定的接口或资源。
+访问控制列表（Access Control List，ACL）：ACL提供了更灵活的授权机制，可以为每个用户或用户组分配特定的权限。
+表达式授权：Spring Security还支持使用表达式进行授权，可以在注解或配置中使用表达式定义访问规则。
+
+2.认证过程  
+用户提交登录请求。
+请求经过自定义登录接口，即LoginController处理。
+在LoginController中，调用LoginService接口处理认证逻辑。
+在LoginService中，调用AuthenticationManager的authenticate方法进行身份认证。将用户提交的用户名和密码封装为UsernamePasswordAuthenticationToken对象，并传入authenticate方法。
+AuthenticationManager根据配置的认证策略，选择合适的AuthenticationProvider进行认证。通常情况下，会使用DaoAuthenticationProvider进行用户名密码认证。
+AuthenticationProvider验证用户名密码是否正确，如果正确，则返回一个经过认证的Authentication对象。
+在LoginService中，通过调用Authentication对象的getPrincipal方法获取登录用户信息，即LoginUser对象。
+LoginUser对象获取到用户信息后，进行额外的验证或操作，比如检查用户状态、权限等。
+如果用户信息验证通过，LoginService调用ProviderManager的方法进行授权。通常会生成 JWT（JSON Web Token）作为用户凭证。
+授权成功后，将用户信息存入Redis或其他缓存中，以供后续验证和查询用户权限信息使用。
+返回生成的 JWT 或其他凭证给客户端。
