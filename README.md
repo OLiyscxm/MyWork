@@ -70,3 +70,6 @@ CREATE TABLE myUser (
   username VARCHAR(255) NOT NULL,  
   password VARCHAR(255) NOT NULL
 );  
+
+第六课  
+需要Util来简化配置，因为提供的不同的utils导致方法名及参数数量不一致是较麻烦的问题
